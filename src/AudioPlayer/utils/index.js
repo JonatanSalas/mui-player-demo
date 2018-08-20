@@ -20,10 +20,6 @@ export const getFormattedTime = time => {
   return `${dateTimeM}:${dateTimeS}`;
 };
 
-export const formatProgressOverDuration = (progress, duration) => {
-  return `${getFormattedTime(progress)} / ${getFormattedTime(duration)}`;
-};
-
 export const getIconByPlayerStatus = playerStatus => {
   switch (playerStatus) {
     case Player.Status.PAUSE:
