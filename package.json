@@ -1,0 +1,24 @@
+{
+  "name": "material-ui-music-player",
+  "version": "0.0.0",
+  "description": "",
+  "keywords": [],
+  "main": "index.js",
+  "dependencies": {
+    "@material-ui/core": "1.5.0",
+    "@material-ui/icons": "2.0.2",
+    "@material-ui/lab": "1.0.0-alpha.10",
+    "prop-types": "15.6.2",
+    "react": "16.4.2",
+    "react-dom": "16.4.2"
+  },
+  "devDependencies": {
+    "react-scripts": "1.0.0"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  }
+}
