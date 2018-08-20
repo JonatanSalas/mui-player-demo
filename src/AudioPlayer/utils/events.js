@@ -1,8 +1,3 @@
-export const PlayerEvents = {
-  TIME_UPDATE: "timeupdate",
-  CAN_PLAY: "canplaythrough"
-};
-
 export const attachToEvent = (player, name, callback) => {
   if (player) {
     player.addEventListener(name, () => callback(player), false);

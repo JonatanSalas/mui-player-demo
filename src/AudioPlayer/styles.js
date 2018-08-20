@@ -4,28 +4,18 @@ export default theme => ({
     margin: "0px",
     padding: "4px"
   },
-  "loop-icon": {
-    padding: "0px",
-    margin: "0px",
-    width: "36px",
-    height: "36px",
-    color: "#424242"
+  "centered": {
+    "text-align": "center"
   },
-  "play-icon": {
+  "icon": {
     padding: "0px",
     margin: "0px",
-    width: "36px",
-    height: "36px",
-    color: "#424242"
-  },
-  "mute-icon": {
-    padding: "0px",
-    margin: "0px",
-    width: "36px",
-    height: "36px",
+    width: "32px",
+    height: "32px",
     color: "#424242"
   },
   progress: {
+    "width": "auto !important",
     "border-radius": "4px",
     "margin-top": "4px",
     height: "9px"

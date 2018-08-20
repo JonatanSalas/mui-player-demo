@@ -8,17 +8,18 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import {
-  formatProgressOverDuration,
   getIconByPlayerStatus,
   getIconByMuteStatus,
   getIconByLoopStatus,
+  getFormattedTime,
   getCurrentTime,
   getProgress,
-  PlayerStatus
 } from "./utils";
 
 import { getPlayerStateFromAction } from "./utils/actions";
-import { attachToEvent, removeFromEvent, PlayerEvents } from "./utils/events";
+import { attachToEvent, removeFromEvent } from "./utils/events";
+
+import Player from './utils/constants';
 
 import styles from "./styles";
 
@@ -41,7 +42,7 @@ class AudioPlayer extends React.PureComponent {
   static defaultProps = {
     classes: {},
     classNames: {},
-    width: "450px",
+    width: "500px",
     height: "45px"
   };
 
@@ -49,23 +50,23 @@ class AudioPlayer extends React.PureComponent {
     current: 0,
     progress: 0,
     duration: 0,
-    loopStatus: PlayerStatus.UNLOOP,
-    playStatus: PlayerStatus.PAUSED,
-    muteStatus: PlayerStatus.UNMUTED
+    loopStatus: Player.Status.UNLOOP,
+    playStatus: Player.Status.PAUSE,
+    muteStatus: Player.Status.UNMUTE
   };
 
   componentDidMount() {
-    attachToEvent(this.player, PlayerEvents.CAN_PLAY, this.handleCanPlay);
+    attachToEvent(this.player, Player.Events.CAN_PLAY, this.handleCanPlay);
 
     if (this.props.autoPlay) {
-      this.triggerAction(PlayerStatus.PLAYING);
+      this.triggerAction(Player.Status.PLAY);
     }
   }
 
   componentWillUnmount() {
     if (this.player) {
-      removeFromEvent(this.player, PlayerEvents.TIME_UPDATE, this.handleTimeUpdate);
-      removeFromEvent(this.player, PlayerEvents.CAN_PLAY, this.handleCanPlay);
+      removeFromEvent(this.player, Player.Events.TIME_UPDATE, this.handleTimeUpdate);
+      removeFromEvent(this.player, Player.Events.CAN_PLAY, this.handleCanPlay);
 
       this.player = null;
     }
@@ -98,28 +99,38 @@ class AudioPlayer extends React.PureComponent {
             height
           }}
         >
-          <Grid alignItems="center" justify="center" spacing={16} container>
-            <Grid xs={1} item>
+          <Grid alignItems="center" justify="center" spacing={0} container>
+            <Grid className={classes["centered"]} xs={1} item>
               <LoopStatusIcon
-                onClick={() => this.triggerAction("loop")}
-                className={css(classes["loop-icon"], loopIcon)}
+                onClick={() => this.triggerAction(Player.Status.LOOP)}
+                className={css(classes["icon"], loopIcon)}
               />
             </Grid>
-            <Grid xs={1} item>
+            <Grid className={classes["centered"]} xs={1} item>
               <PlayStatusIcon
-                onClick={() => this.triggerAction("play")}
-                className={css(classes["play-icon"], playIcon)}
+                onClick={() => this.triggerAction(Player.Status.PLAY)}
+                className={css(classes["icon"], playIcon)}
               />
             </Grid>
-            <Grid xs={1} item>
+            <Grid className={classes["centered"]} xs={1} item>
               <MuteStatusIcon
-                onClick={() => this.triggerAction("mute")}
-                className={css(classes["mute-icon"], muteIcon)}
+                onClick={() => this.triggerAction(Player.Status.MUTE)}
+                className={css(classes["icon"], muteIcon)}
               />
             </Grid>
-            <Grid xs={9} item>
-              <Grid spacing={8} direction="row" container>
-                <Grid xs={8} item>
+            <Grid className={classes["centered"]} xs={9} item>
+              <Grid justify="center" spacing={0} direction="row" container>
+                <Grid className={classes["centered"]} xs={2} item>
+                  <Typography
+                    className={css(classes["text"], text)}
+                    align="center"
+                    gutterBottom
+                    noWrap
+                  >
+                    {getFormattedTime(current)}
+                  </Typography>
+                </Grid>
+                <Grid className={classes["centered"]} xs={8} item>
                   <Slider
                     onChange={(_, progress) => this.handleChange(progress, this.player)}
                     className={css(classes["progress"], slider)}
@@ -128,14 +139,14 @@ class AudioPlayer extends React.PureComponent {
                     value={progress}
                   />
                 </Grid>
-                <Grid xs={4} item>
+                <Grid className={classes["centered"]} xs={2} item>
                   <Typography
                     className={css(classes["text"], text)}
                     align="center"
                     gutterBottom
                     noWrap
                   >
-                    {formatProgressOverDuration(current, duration)}
+                    {getFormattedTime(duration)}
                   </Typography>
                 </Grid>
               </Grid>
@@ -155,8 +166,8 @@ class AudioPlayer extends React.PureComponent {
   };
 
   handleCanPlay = player => {
-    attachToEvent(player, PlayerEvents.TIME_UPDATE, this.handleTimeUpdate);
-  
+    attachToEvent(player, Player.Events.TIME_UPDATE, this.handleTimeUpdate);
+
     this.setState({
       duration: player.duration
     });

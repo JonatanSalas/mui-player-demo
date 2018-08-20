@@ -1,4 +1,4 @@
-import { PlayerStatus } from "./index";
+import Player from './constants';
 
 export const playAudio = player => {
   if (player) {
@@ -6,10 +6,10 @@ export const playAudio = player => {
 
     if (player.paused) {
       player.play();
-      status = PlayerStatus.PLAYING;
+      status = Player.Status.PLAY;
     } else {
       player.pause();
-      status = PlayerStatus.PAUSED;
+      status = Player.Status.PAUSE;
     }
 
     return { playStatus: status };
@@ -24,10 +24,10 @@ export const muteAudio = player => {
 
     if (player.muted) {
       player.muted = false;
-      status = PlayerStatus.UNMUTED;
+      status = Player.Status.UNMUTE;
     } else {
       player.muted = true;
-      status = PlayerStatus.MUTED;
+      status = Player.Status.MUTE;
     }
 
     return { muteStatus: status };
@@ -42,10 +42,10 @@ export const loopAudio = player => {
 
     if (player.loop) {
       player.loop = false;
-      status = PlayerStatus.UNLOOP;
+      status = Player.Status.UNLOOP;
     } else {
       player.loop = true;
-      status = PlayerStatus.LOOP;
+      status = Player.Status.LOOP;
     }
 
     return { loopStatus: status };
@@ -58,13 +58,13 @@ export const getPlayerStateFromAction = (player, action) => {
   let newState = null;
 
   switch (action) {
-    case PlayerStatus.LOOP:
+    case Player.Status.LOOP:
       newState = loopAudio(player);
       break;
-    case PlayerStatus.MUTED:
+    case Player.Status.MUTE:
       newState = muteAudio(player);
       break;
-    case PlayerStatus.PLAYING:
+    case Player.Status.PLAY:
     default:
       newState = playAudio(player);
       break;
