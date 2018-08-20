@@ -1,8 +1,5 @@
 import PauseIcon from "@material-ui/icons/PauseCircleFilled";
 import PlayIcon from "@material-ui/icons/PlayCircleFilled";
-import VolumeOff from "@material-ui/icons/VolumeOff";
-import VolumeUp from "@material-ui/icons/VolumeUp";
-import LoopIcon from "@material-ui/icons/Repeat";
 
 import Player from "./constants";
 
@@ -28,20 +25,6 @@ export const getIconByPlayerStatus = playerStatus => {
     default:
       return PauseIcon;
   }
-};
-
-export const getIconByMuteStatus = muteStatus => {
-  switch (muteStatus) {
-    case Player.Status.MUTE:
-      return VolumeOff;
-    case Player.Status.UNMUTE:
-    default:
-      return VolumeUp;
-  }
-};
-
-export const getIconByLoopStatus = loopStatus => {
-  return LoopIcon;
 };
 
 export const getProgress = (currentTime, duration) =>

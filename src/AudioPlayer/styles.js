@@ -11,6 +11,16 @@ const getColor = (theme, type, opacity) => {
   return lighten(color, opacity);
 };
 
+const getGreyColor = (theme, opacity) => {
+  const greyColor = theme.palette.grey["500"];
+
+  if (!opacity) {
+    return greyColor;
+  }
+
+  return lighten(greyColor, opacity);
+};
+
 export default theme => ({
   "player-grid-container": {
     "background-color": theme.palette.background.default,
@@ -23,23 +33,35 @@ export default theme => ({
   "player-default-icon": {
     padding: "0px",
     margin: "0px",
-    width: "30px",
-    height: "30px",
-    fill: getColor(theme, "primary"),
-    color: getColor(theme, "primary"),
+    width: "27px",
+    height: "27px",
+    fill: `${getColor(theme, "primary")} !important`,
+    color: `${getColor(theme, "primary")} !important`,
     "&:hover": {
-      fill: getColor(theme, "primary", 0.25),
-      color: getColor(theme, "primary", 0.25)
+      fill: `${getColor(theme, "primary", 0.25)} !important`,
+      color: `${getColor(theme, "primary", 0.25)} !important`
+    }
+  },
+  "player-icon-disabled": {
+    padding: "0px",
+    margin: "0px",
+    width: "27px",
+    height: "27px",
+    fill: getGreyColor(theme),
+    color: getGreyColor(theme),
+    "&:hover": {
+      fill: getGreyColor(theme, 0.25),
+      color: getGreyColor(theme, 0.25)
     }
   },
   "player-main-icon": {
     width: "40px",
     height: "40px",
-    fill: getColor(theme, "secondary"),
-    color: getColor(theme, "secondary"),
+    fill: `${getColor(theme, "secondary")} !important`,
+    color: `${getColor(theme, "secondary")} !important`,
     "&:hover": {
-      fill: getColor(theme, "secondary", 0.25),
-      color: getColor(theme, "secondary", 0.25)
+      fill: `${getColor(theme, "secondary", 0.25)} !important`,
+      color: `${getColor(theme, "secondary", 0.25)} !important`
     }
   },
   "player-slider-container": {

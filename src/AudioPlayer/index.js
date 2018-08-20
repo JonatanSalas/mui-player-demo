@@ -7,11 +7,12 @@ import Slider from "@material-ui/lab/Slider";
 import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 
+import LoopStatusIcon from "@material-ui/icons/Repeat";
+import MuteStatusIcon from "@material-ui/icons/VolumeMute";
+
 import {
   getPlayerStateFromAction,
   getIconByPlayerStatus,
-  getIconByMuteStatus,
-  getIconByLoopStatus,
   getFormattedTime,
   removeFromEvent,
   getCurrentTime,
@@ -28,6 +29,7 @@ class AudioPlayer extends React.PureComponent {
     src: PropTypes.string.isRequired,
     width: PropTypes.string,
     height: PropTypes.string,
+    rounded: PropTypes.bool,
     classes: PropTypes.object,
     classNames: PropTypes.shape({
       player: PropTypes.string,
@@ -42,6 +44,7 @@ class AudioPlayer extends React.PureComponent {
   };
 
   static defaultProps = {
+    rounded: false,
     classes: {},
     classNames: {},
     width: "500px",
@@ -75,12 +78,10 @@ class AudioPlayer extends React.PureComponent {
   }
 
   render() {
-    const { width, height, src, classes, classNames: { player, loopIcon, playIcon, muteIcon, slider, track, thumb, text } } = this.props;
+    const { rounded, width, height, src, classes, classNames: { player, loopIcon, playIcon, muteIcon, slider, track, thumb, text } } = this.props;
     const { loopStatus, playStatus, muteStatus, progress, current, duration } = this.state;
 
     const PlayStatusIcon = getIconByPlayerStatus(playStatus);
-    const MuteStatusIcon = getIconByMuteStatus(muteStatus);
-    const LoopStatusIcon = getIconByLoopStatus(loopStatus);
 
     return (
       <React.Fragment>
@@ -95,7 +96,7 @@ class AudioPlayer extends React.PureComponent {
         <Paper
           className={css(classes["player-grid-container"], player)}
           elevation={1}
-          square={true}
+          square={!rounded}
           style={{
             width,
             height
@@ -105,7 +106,7 @@ class AudioPlayer extends React.PureComponent {
             <Grid className={classes["player-centered-grid-item"]} xs={1} item>
               <LoopStatusIcon
                 onClick={() => this.triggerAction(Player.Status.LOOP)}
-                className={css(classes["player-default-icon"], loopIcon)}
+                className={css(classes["player-icon-disabled"], loopIcon, { [classes["player-default-icon"]]: loopStatus === Player.Status.LOOP })}
                 focusable="true"
               />
             </Grid>
@@ -119,7 +120,7 @@ class AudioPlayer extends React.PureComponent {
             <Grid className={classes["player-centered-grid-item"]} xs={1} item>
               <MuteStatusIcon
                 onClick={() => this.triggerAction(Player.Status.MUTE)}
-                className={css(classes["player-default-icon"], muteIcon)}
+                className={css(classes["player-icon-disabled"], muteIcon, { [classes["player-default-icon"]]: muteStatus === Player.Status.MUTE })}
                 focusable="true"
               />
             </Grid>
@@ -138,7 +139,7 @@ class AudioPlayer extends React.PureComponent {
                 <Grid className={classes["player-centered-grid-item"]} xs={8} item>
                   <Slider
                     onChange={(_, progress) => this.handleChange(progress, this.player)}
-                    classes={{ 
+                    classes={{
                       root: css(classes["player-slider-container"], slider),
                       track: css(classes["player-slider-track"], track),
                       thumb: css(classes["player-slider-thumb"], thumb),
