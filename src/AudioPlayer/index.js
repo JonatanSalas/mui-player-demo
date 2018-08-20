@@ -82,6 +82,9 @@ class AudioPlayer extends React.PureComponent {
     const { loopStatus, playStatus, muteStatus, progress, current, duration } = this.state;
 
     const PlayStatusIcon = getIconByPlayerStatus(playStatus);
+    
+    const isLoopEnable = loopStatus === Player.Status.LOOP;
+    const isMuteEnable = muteStatus === Player.Status.MUTE;
 
     return (
       <React.Fragment>
@@ -95,8 +98,8 @@ class AudioPlayer extends React.PureComponent {
         </audio>
         <Paper
           className={css(classes["player-grid-container"], player)}
-          elevation={1}
           square={!rounded}
+          elevation={1}
           style={{
             width,
             height
@@ -105,22 +108,22 @@ class AudioPlayer extends React.PureComponent {
           <Grid alignItems="center" justify="center" spacing={0} container>
             <Grid className={classes["player-centered-grid-item"]} xs={1} item>
               <LoopStatusIcon
+                className={css(classes["player-icon-disabled"], loopIcon, { [classes["player-default-icon"]]: isLoopEnable })}
                 onClick={() => this.triggerAction(Player.Status.LOOP)}
-                className={css(classes["player-icon-disabled"], loopIcon, { [classes["player-default-icon"]]: loopStatus === Player.Status.LOOP })}
                 focusable="true"
               />
             </Grid>
             <Grid className={classes["player-centered-grid-item"]} xs={1} item>
               <PlayStatusIcon
-                onClick={() => this.triggerAction(Player.Status.PLAY)}
                 className={css(classes["player-default-icon"], classes["player-main-icon"], playIcon)}
+                onClick={() => this.triggerAction(Player.Status.PLAY)}
                 focusable="true"
               />
             </Grid>
             <Grid className={classes["player-centered-grid-item"]} xs={1} item>
               <MuteStatusIcon
+                className={css(classes["player-icon-disabled"], muteIcon, { [classes["player-default-icon"]]: isMuteEnable })}
                 onClick={() => this.triggerAction(Player.Status.MUTE)}
-                className={css(classes["player-icon-disabled"], muteIcon, { [classes["player-default-icon"]]: muteStatus === Player.Status.MUTE })}
                 focusable="true"
               />
             </Grid>
