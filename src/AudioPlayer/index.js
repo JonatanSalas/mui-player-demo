@@ -35,6 +35,8 @@ class AudioPlayer extends React.PureComponent {
       playIcon: PropTypes.string,
       muteIcon: PropTypes.string,
       slider: PropTypes.string,
+      track: PropTypes.string,
+      thumb: PropTypes.string,
       text: PropTypes.string
     })
   };
@@ -73,7 +75,7 @@ class AudioPlayer extends React.PureComponent {
   }
 
   render() {
-    const { width, height, src, classes, classNames: { player, loopIcon, playIcon, muteIcon, slider, text } } = this.props;
+    const { width, height, src, classes, classNames: { player, loopIcon, playIcon, muteIcon, slider, track, thumb, text } } = this.props;
     const { loopStatus, playStatus, muteStatus, progress, current, duration } = this.state;
 
     const PlayStatusIcon = getIconByPlayerStatus(playStatus);
@@ -136,7 +138,11 @@ class AudioPlayer extends React.PureComponent {
                 <Grid className={classes["player-centered-grid-item"]} xs={8} item>
                   <Slider
                     onChange={(_, progress) => this.handleChange(progress, this.player)}
-                    className={css(classes["player-slider-bar"], slider)}
+                    classes={{ 
+                      root: css(classes["player-slider-container"], slider),
+                      track: css(classes["player-slider-track"], track),
+                      thumb: css(classes["player-slider-thumb"], thumb),
+                    }}
                     variant="determinate"
                     color="secondary"
                     value={progress}

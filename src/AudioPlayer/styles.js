@@ -1,7 +1,8 @@
 import { lighten } from "@material-ui/core/styles/colorManipulator";
 
 const getColor = (theme, type, opacity) => {
-  const color = theme.palette[type][theme.palette.type === "light" ? "main" : "dark"];
+  const color =
+    theme.palette[type][theme.palette.type === "light" ? "main" : "dark"];
 
   if (!opacity) {
     return color;
@@ -28,7 +29,7 @@ export default theme => ({
     color: getColor(theme, "primary"),
     "&:hover": {
       fill: getColor(theme, "primary", 0.25),
-      color: getColor(theme, "primary", 0.25),
+      color: getColor(theme, "primary", 0.25)
     }
   },
   "player-main-icon": {
@@ -41,11 +42,17 @@ export default theme => ({
       color: getColor(theme, "secondary", 0.25)
     }
   },
-  "player-slider-bar": {
+  "player-slider-container": {
     width: "auto !important",
     "border-radius": "4px",
     "margin-top": "4px",
     height: "9px"
+  },
+  "player-slider-track": {
+    "background-color": getColor(theme, "primary")
+  },
+  "player-slider-thumb": {
+    "background-color": getColor(theme, "secondary")
   },
   "player-text-timer": {
     color: theme.palette.getContrastText(theme.palette.background.default),
