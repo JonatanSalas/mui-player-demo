@@ -3,17 +3,13 @@ import PlayIcon from "@material-ui/icons/PlayCircleFilled";
 import VolumeOff from "@material-ui/icons/VolumeOff";
 import VolumeUp from "@material-ui/icons/VolumeUp";
 import LoopIcon from "@material-ui/icons/Repeat";
-import UnLoopIcon from "@material-ui/icons/SyncDisabled";
 
-import Player from './constants';
+import Player from "./constants";
 
-export const appendZero = number => {
-  if (number < 10) {
-    return `0${number}`;
-  }
+export * from "./actions";
+export * from "./events";
 
-  return number;
-};
+export const appendZero = number => (number < 10 ? `0${number}` : number);
 
 export const getFormattedTime = time => {
   const dateTime = new Date(0, 0, 0, 0, 0, time, 0);
@@ -49,13 +45,7 @@ export const getIconByMuteStatus = muteStatus => {
 };
 
 export const getIconByLoopStatus = loopStatus => {
-  switch (loopStatus) {
-    case Player.Status.LOOP:
-      return LoopIcon;
-    case Player.Status.UNLOOP:
-    default:
-      return UnLoopIcon;
-  }
+  return LoopIcon;
 };
 
 export const getProgress = (currentTime, duration) =>

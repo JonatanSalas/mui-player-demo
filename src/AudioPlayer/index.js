@@ -8,16 +8,16 @@ import Typography from "@material-ui/core/Typography";
 import withStyles from "@material-ui/core/styles/withStyles";
 
 import {
+  getPlayerStateFromAction,
   getIconByPlayerStatus,
   getIconByMuteStatus,
   getIconByLoopStatus,
   getFormattedTime,
+  removeFromEvent,
   getCurrentTime,
+  attachToEvent,
   getProgress,
 } from "./utils";
-
-import { getPlayerStateFromAction } from "./utils/actions";
-import { attachToEvent, removeFromEvent } from "./utils/events";
 
 import Player from './utils/constants';
 
@@ -91,7 +91,7 @@ class AudioPlayer extends React.PureComponent {
           <source src={src} />
         </audio>
         <Paper
-          className={css(classes["player"], player)}
+          className={css(classes["player-grid-container"], player)}
           elevation={1}
           square={true}
           style={{
@@ -100,29 +100,32 @@ class AudioPlayer extends React.PureComponent {
           }}
         >
           <Grid alignItems="center" justify="center" spacing={0} container>
-            <Grid className={classes["centered"]} xs={1} item>
+            <Grid className={classes["player-centered-grid-item"]} xs={1} item>
               <LoopStatusIcon
                 onClick={() => this.triggerAction(Player.Status.LOOP)}
-                className={css(classes["icon"], loopIcon)}
+                className={css(classes["player-default-icon"], loopIcon)}
+                focusable="true"
               />
             </Grid>
-            <Grid className={classes["centered"]} xs={1} item>
+            <Grid className={classes["player-centered-grid-item"]} xs={1} item>
               <PlayStatusIcon
                 onClick={() => this.triggerAction(Player.Status.PLAY)}
-                className={css(classes["icon"], playIcon)}
+                className={css(classes["player-default-icon"], classes["player-main-icon"], playIcon)}
+                focusable="true"
               />
             </Grid>
-            <Grid className={classes["centered"]} xs={1} item>
+            <Grid className={classes["player-centered-grid-item"]} xs={1} item>
               <MuteStatusIcon
                 onClick={() => this.triggerAction(Player.Status.MUTE)}
-                className={css(classes["icon"], muteIcon)}
+                className={css(classes["player-default-icon"], muteIcon)}
+                focusable="true"
               />
             </Grid>
-            <Grid className={classes["centered"]} xs={9} item>
+            <Grid className={classes["player-centered-grid-item"]} xs={9} item>
               <Grid justify="center" spacing={0} direction="row" container>
-                <Grid className={classes["centered"]} xs={2} item>
+                <Grid className={classes["player-centered-grid-item"]} xs={2} item>
                   <Typography
-                    className={css(classes["text"], text)}
+                    className={css(classes["player-text-timer"], text)}
                     align="center"
                     gutterBottom
                     noWrap
@@ -130,18 +133,18 @@ class AudioPlayer extends React.PureComponent {
                     {getFormattedTime(current)}
                   </Typography>
                 </Grid>
-                <Grid className={classes["centered"]} xs={8} item>
+                <Grid className={classes["player-centered-grid-item"]} xs={8} item>
                   <Slider
                     onChange={(_, progress) => this.handleChange(progress, this.player)}
-                    className={css(classes["progress"], slider)}
+                    className={css(classes["player-slider-bar"], slider)}
                     variant="determinate"
                     color="secondary"
                     value={progress}
                   />
                 </Grid>
-                <Grid className={classes["centered"]} xs={2} item>
+                <Grid className={classes["player-centered-grid-item"]} xs={2} item>
                   <Typography
-                    className={css(classes["text"], text)}
+                    className={css(classes["player-text-timer"], text)}
                     align="center"
                     gutterBottom
                     noWrap

@@ -1,18 +1,18 @@
-import Player from './constants';
+import Player from "./constants";
 
 export const playAudio = player => {
   if (player) {
-    let status = null;
+    let playStatus = null;
 
     if (player.paused) {
       player.play();
-      status = Player.Status.PLAY;
+      playStatus = Player.Status.PLAY;
     } else {
       player.pause();
-      status = Player.Status.PAUSE;
+      playStatus = Player.Status.PAUSE;
     }
 
-    return { playStatus: status };
+    return { playStatus };
   }
 
   return null;
@@ -20,17 +20,17 @@ export const playAudio = player => {
 
 export const muteAudio = player => {
   if (player) {
-    let status = null;
+    let muteStatus = null;
 
     if (player.muted) {
       player.muted = false;
-      status = Player.Status.UNMUTE;
+      muteStatus = Player.Status.UNMUTE;
     } else {
       player.muted = true;
-      status = Player.Status.MUTE;
+      muteStatus = Player.Status.MUTE;
     }
 
-    return { muteStatus: status };
+    return { muteStatus };
   }
 
   return null;
@@ -38,17 +38,17 @@ export const muteAudio = player => {
 
 export const loopAudio = player => {
   if (player) {
-    let status = null;
+    let loopStatus = null;
 
     if (player.loop) {
       player.loop = false;
-      status = Player.Status.UNLOOP;
+      loopStatus = Player.Status.UNLOOP;
     } else {
       player.loop = true;
-      status = Player.Status.LOOP;
+      loopStatus = Player.Status.LOOP;
     }
 
-    return { loopStatus: status };
+    return { loopStatus };
   }
 
   return null;
